@@ -48,15 +48,9 @@
         
         appleSprite_ = [CCSprite spriteWithFile:@"apple.png"];
         [appleSprite_ setAnchorPoint:ccp(0, 0.5)];
-//        [appleSprite_ setPosition:ccp(0, 210)];
         [appleSprite_ setPosition:ccp(0, winSize.height/2)];
         
         [self addChild:appleSprite_];
-        
-//        windowsSprite_ = [CCSprite spriteWithFile:@"windows.png"];
-//        [windowsSprite_ setAnchorPoint:ccp(1, 0.5)];
-//        [windowsSprite_ setPosition:ccp(420, 210)];
-//        [self addChild:windowsSprite_];
         
         windowsArr_ = [[NSMutableArray alloc]init];
         projectileArr_ = [[NSMutableArray alloc]init];
@@ -113,20 +107,24 @@
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-//    NSLog(@"ccTouchBegan");
-//    CGPoint locactionGoal = [self convertTouchToNodeSpace:touch];
-//    NSLog(@"x=%f, y=%f", locactionGoal.x,locactionGoal.y);
-//    
-//    goalX_ = locactionGoal.x;
-//    goalY_ = locactionGoal.y;
-//    
-//    [self schedule:@selector(moveToApple)];
-     
     return YES;
 }
 
--(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event{
+-(void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    NSLog(@"ccTouchMoved");
+    NSLog(@"random=%i",arc4random());
+    CGPoint touchPos=[touch locationInView:[touch view]];
+    touchPos.x=0;
+    CGPoint position=[[CCDirector sharedDirector]convertToGL:touchPos];
+    [appleSprite_ setPosition:position];
+}
+
+-(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
     NSLog(@"ccTouchEnded");
+    
+    [appleSprite_ stopAllActions];
     
     CGPoint location =[touch locationInView:[touch view]];
     location =[[CCDirector sharedDirector] convertToGL:location];
@@ -141,22 +139,15 @@
     
     int offX = location.x - projectile.position.x;
     int offY = location.y - projectile.position.y;
-    
-    /* Bail out if we are shooting down or backwards */
     if(offX <=0)return;
-    
-    /* Ok to add now - we've double checked position */
     [self addChild:projectile];
     
-    /* Determine where we wish to shoot the projectile to */
     int realX = winSize.width +(projectile.contentSize.width/2);
     float ratio =(float) offY /(float) offX;
     int realY =(realX * ratio)+ projectile.position.y;
-//    CGPoint realDest = ccp(realX, realY);
-//    CGPoint realDest2 = ccp(realX, realY+100);
-    CGPoint realDest = ccp(realX, realY);
-    CGPoint realDest2 = ccp(realX/2, realY+100);
 
+    CGPoint realDest = ccp(abs(realX)/(arc4random()%5+1), abs(realY)/(arc4random()%5+1));
+    CGPoint realDest2 = ccp(abs(realX)/(arc4random()%5+1), abs(realY)/(arc4random()%5+1));
     
     /* Determine the length of how far we're shooting */
     int offRealX = realX - projectile.position.x;
@@ -168,7 +159,8 @@
     ccBezierConfig bezier1;
     bezier1.controlPoint_1 = realDest;
     bezier1.controlPoint_2 = realDest2;
-    bezier1.endPosition = ccp(0,320);
+    bezier1.endPosition = ccp(arc4random()%abs(realX),arc4random()%abs(realY));
+
     
     id bezierBy = [CCBezierBy actionWithDuration:realMoveDuration bezier:bezier1];
     
@@ -177,11 +169,6 @@
                            bezierBy,
                            [CCCallFuncN actionWithTarget:self selector:@selector(spriteMoveFinished:)],
                            nil]];
-
-//    [projectile runAction:[CCSequence actions:
-//                           [CCMoveTo actionWithDuration:realMoveDuration position:realDest],
-//                           [CCCallFuncN actionWithTarget:self selector:@selector(spriteMoveFinished:)],
-//                           nil]];
 }
 
 -(void)update:(ccTime)dt {
@@ -205,7 +192,7 @@
         }
         for(CCSprite *windows in windowsToDelete){
             [windowsArr_ removeObject:windows];
-            [self removeChild:windows cleanup:YES];                                                                     
+            [self removeChild:windows cleanup:YES];  
         }
         if(windowsToDelete.count > 0){
             [projectilesToDelete addObject:projectile];
