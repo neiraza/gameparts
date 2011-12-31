@@ -11,21 +11,10 @@
 #import "cocos2d.h"
 
 // HelloWorldLayer
-@interface HelloWorldLayer : CCLayer<CCTargetedTouchDelegate>
+@interface HelloWorldLayer : CCLayer
 {
-    CCSprite *appleSprite_;
-    CCSprite *windowsSprite_;
-    float goalX_;
-    float goalY_;
-    CCParticleSystem *emitter_;
-    NSMutableArray *windowsArr_;
-    NSMutableArray *projectileArr_;
 }
-@property(readwrite,retain) CCParticleSystem *emitter;
 
--(void)addWindows;
-
-// returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
 
 @end
