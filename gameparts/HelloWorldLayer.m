@@ -39,7 +39,7 @@
         CCLabelTTF *label = [CCLabelTTF labelWithString:@"Apple VS. Windows" 
                                                fontName:@"Marker Felt" fontSize:64];
         CGSize size = [[CCDirector sharedDirector] winSize];
-        label.position =  ccp( size.width /2 , size.height*3/4 );
+        [label setPosition:ccp(size.width/2, size.height*3/4)];
         [self addChild: label];
         
         // set up mene items

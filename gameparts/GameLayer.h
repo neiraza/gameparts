@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "ScoreManager.h"
 
 @interface GameLayer : CCLayer 
 {
@@ -18,6 +19,11 @@
     CCParticleSystem *emitter_;
     NSMutableArray *windowsArr_;
     NSMutableArray *projectileArr_;
+    CCLabelTTF *scoreLabel_;
+    ScoreManager *scoreManager_;
+    CCLabelTTF *projectitleLabel_;
+    CCLabelTTF *windowsLabel_;
+    CGSize winSize_;
 }
 @property(readwrite,retain) CCParticleSystem *emitter;
 -(void)addWindows;

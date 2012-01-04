@@ -8,7 +8,6 @@
 
 #import "GameLayer.h"
 
-
 @implementation GameLayer
 @synthesize emitter = emitter_;
 
@@ -24,6 +23,15 @@
 {
 	if( (self=[super init])) {
         NSLog(@"GameLayer init");
+        
+
+        scoreManager_ = [[ScoreManager alloc]init];
+        [scoreManager_ addObserver:self forKeyPath:@"score" options:0 context:nil];
+        [scoreManager_ addObserver:self forKeyPath:@"projectile" options:0 context:nil];
+        [scoreManager_ addObserver:self forKeyPath:@"windows" options:0 context:nil];
+
+        winSize_ =[[CCDirector sharedDirector] winSize];
+
         [[CCTouchDispatcher sharedDispatcher]addTargetedDelegate:self priority:0 swallowsTouches:YES];
         self.isTouchEnabled = YES;
 		
@@ -32,14 +40,26 @@
         [layer setPosition:ccp(240, 160)];
 		[self addChild:layer];
         
-        CGSize winSize =[[CCDirector sharedDirector] winSize];
+        scoreLabel_ = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Score：%d",scoreManager_.score] fontName:@"TimesNewRomanPS-BoldItalicMT" fontSize:22];
+        [scoreLabel_ setAnchorPoint:ccp(0, 1)];
+        [scoreLabel_ setPosition:ccp(0, winSize_.height)];
+        [self addChild:scoreLabel_];
+
+        projectitleLabel_ = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Apple：%d",scoreManager_.windowsGoal] fontName:@"TimesNewRomanPS-BoldItalicMT" fontSize:22];
+        [projectitleLabel_ setAnchorPoint:ccp(1, 1)];
+        [projectitleLabel_ setPosition:ccp(winSize_.width, winSize_.height)];
+        [self addChild:projectitleLabel_];
         
+        windowsLabel_ = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"Windos：%d",scoreManager_.windowsGoal] fontName:@"TimesNewRomanPS-BoldItalicMT" fontSize:22];
+        [windowsLabel_ setAnchorPoint:ccp(1, 1)];
+        [windowsLabel_ setPosition:ccp(winSize_.width, winSize_.height-projectitleLabel_.contentSize.height)];
+        [self addChild:windowsLabel_];
+
         appleSprite_ = [CCSprite spriteWithFile:@"apple.png"];
-        [appleSprite_ setAnchorPoint:ccp(0, 0.5)];
-        [appleSprite_ setPosition:ccp(0, winSize.height/2)];
+        [appleSprite_ setPosition:ccp(appleSprite_.contentSize.width/2, winSize_.height/2)];
         
         [self addChild:appleSprite_];
-        
+                
         windowsArr_ = [[NSMutableArray alloc]init];
         projectileArr_ = [[NSMutableArray alloc]init];
         
@@ -60,13 +80,12 @@
     windowsSprite_.tag=1;
     [windowsArr_ addObject:windowsSprite_];
     
-    CGSize winSize =[[CCDirector sharedDirector] winSize];
     int minY = windowsSprite_.contentSize.height/2;
-    int maxY = winSize.height - windowsSprite_.contentSize.height/2;
+    int maxY = winSize_.height - windowsSprite_.contentSize.height/2;
     int rangeY = maxY - minY;
     int actualY =(arc4random()% rangeY)+ minY;
     
-    windowsSprite_.position = ccp(winSize.width +(windowsSprite_.contentSize.width/2), actualY);
+    windowsSprite_.position = ccp(winSize_.width +(windowsSprite_.contentSize.width/2), actualY);
     [self addChild:windowsSprite_];
     
     int minDuration =2.0;
@@ -81,12 +100,46 @@
     [windowsSprite_ runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];
 }
 
--(void)spriteMoveFinished:(id)sender {
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"observeValueForKeyPath");
+    if ([keyPath isEqualToString:@"score"] == YES) {
+        NSLog(@"observeValueForKeyPath score");
+        [scoreLabel_ setString:[NSString stringWithFormat:@"Score：%d",scoreManager_.score]];
+    }
+    if ([keyPath isEqualToString:@"projectile"] == YES) {
+        NSLog(@"observeValueForKeyPath projectile");
+        [projectitleLabel_ setString:[NSString stringWithFormat:@"Apple：%d",scoreManager_.projectileGoal]];
+    }
+    if ([keyPath isEqualToString:@"windows"] == YES) {
+        NSLog(@"observeValueForKeyPath windows");
+        [windowsLabel_ setString:[NSString stringWithFormat:@"Windows：%d",scoreManager_.windowsGoal]];
+    }
+}
+
+-(void)spriteMoveFinished:(id)sender
+{
     CCSprite *sprite =(CCSprite *)sender;
     
     if(sprite.tag==1){
+        NSLog(@"spriteMoveFinished tag=1 sprite.position.x=%f",sprite.position.x);
+        NSLog(@"spriteMoveFinished tag=1 0 - sprite.contentSize.width/2=%f",0 - sprite.contentSize.width/2);
+        if (sprite.position.x >= 0 - sprite.contentSize.width/2) {
+            if (sprite.position.y > 0 && sprite.position.y < winSize_.height) {
+                NSLog(@"spriteMoveFinished windows");
+                [scoreManager_ addWindowsGoal];
+            }
+        }
         [windowsArr_ removeObject:sprite];
     }else if(sprite.tag==2){
+        NSLog(@"spriteMoveFinished tag=2 sprite.position.x=%f",sprite.position.x);
+        NSLog(@"spriteMoveFinished tag=2 winSize_.width + sprite.contentSize.width/2=%f",winSize_.width + sprite.contentSize.width/2);
+        if (sprite.position.x >= winSize_.width + sprite.contentSize.width/2) {
+            if (sprite.position.y > 0 && sprite.position.y < winSize_.height) {
+                NSLog(@"spriteMoveFinished projectile");
+                [scoreManager_ addProjectileGoal];
+            }
+        }
         [projectileArr_ removeObject:sprite];
     }
     
@@ -100,24 +153,19 @@
 
 -(void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    NSLog(@"ccTouchMoved");
-    NSLog(@"random=%i",arc4random());
     CGPoint touchPos=[touch locationInView:[touch view]];
-    touchPos.x=0;
+    touchPos.x=appleSprite_.contentSize.width/2;
     CGPoint position=[[CCDirector sharedDirector]convertToGL:touchPos];
     [appleSprite_ setPosition:position];
 }
 
 -(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    NSLog(@"ccTouchEnded");
-    
     [appleSprite_ stopAllActions];
     
     CGPoint location =[touch locationInView:[touch view]];
     location =[[CCDirector sharedDirector] convertToGL:location];
     
-    CGSize winSize =[[CCDirector sharedDirector] winSize];
     CCSprite *projectile =[CCSprite spriteWithFile:@"apple.png"];
     
     projectile.tag=2;
@@ -130,7 +178,7 @@
     if(offX <=0)return;
     [self addChild:projectile];
     
-    int realX = winSize.width +(projectile.contentSize.width/2);
+    int realX = winSize_.width +(projectile.contentSize.width/2);
     float ratio =(float) offY /(float) offX;
     int realY =(realX * ratio)+ projectile.position.y;
     
@@ -140,13 +188,13 @@
     int offRealX = realX - projectile.position.x;
     int offRealY = realY - projectile.position.y;
     float length = sqrtf((offRealX*offRealX)+(offRealY*offRealY));
-    float velocity =480/1;
+    float velocity =480/(arc4random()%3+1);
     float realMoveDuration = length/velocity;
     
     ccBezierConfig bezier1;
     bezier1.controlPoint_1 = realDest;
     bezier1.controlPoint_2 = realDest2;
-    bezier1.endPosition = ccp(arc4random()%abs(realX),arc4random()%abs(realY));
+    bezier1.endPosition = ccp(realX,arc4random()%abs(realY));
     
     
     id bezierBy = [CCBezierBy actionWithDuration:realMoveDuration bezier:bezier1];
@@ -157,7 +205,8 @@
                            nil]];
 }
 
--(void)update:(ccTime)dt {
+-(void)update:(ccTime)dt
+{
     NSMutableArray*projectilesToDelete =[[NSMutableArray alloc] init];
     for(CCSprite *projectile in projectileArr_){
         CGRect projectileRect = CGRectMake(
@@ -178,7 +227,8 @@
         }
         for(CCSprite *windows in windowsToDelete){
             [windowsArr_ removeObject:windows];
-            [self removeChild:windows cleanup:YES];  
+            [self removeChild:windows cleanup:YES];
+            [scoreManager_ addScore];
         }
         if(windowsToDelete.count > 0){
             [projectilesToDelete addObject:projectile];
@@ -247,6 +297,10 @@
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc
 {
+    [scoreManager_ removeObserver:self forKeyPath:@"score"];
+    [scoreManager_ removeObserver:self forKeyPath:@"projectile"];
+    [scoreManager_ removeObserver:self forKeyPath:@"windows"];
+    [scoreManager_ release];
     [windowsArr_ release];
     windowsArr_=nil;
     [projectileArr_ release];
