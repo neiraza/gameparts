@@ -7,6 +7,7 @@
 //
 
 #import "GameLayer.h"
+#import "GameOverLayer.h"
 
 @implementation GameLayer
 @synthesize emitter = emitter_;
@@ -19,16 +20,29 @@
 	return scene;
 }
 
+-(void) onGameOverLayer:(id)item
+{
+    [self unschedule:@selector(update)];
+    [self unschedule:@selector(moveToPoint)];
+    
+    CCScene *nextScene = [GameOverLayer scene];
+    GameOverLayer *nextSceneLayer = [nextScene.children objectAtIndex:0];
+    NSLog(@"Score=%d",scoreManager_.score);
+    nextSceneLayer.score = scoreManager_.score;
+    NSLog(@"Score=%d",nextSceneLayer.score);
+
+    CCTransitionJumpZoom *trans = [CCTransitionJumpZoom transitionWithDuration:3 scene:nextScene];    
+    [[CCDirector sharedDirector] replaceScene:trans];    
+}
+
 -(id) init
 {
 	if( (self=[super init])) {
-        NSLog(@"GameLayer init");
-        
-
         scoreManager_ = [[ScoreManager alloc]init];
         [scoreManager_ addObserver:self forKeyPath:@"score" options:0 context:nil];
         [scoreManager_ addObserver:self forKeyPath:@"projectile" options:0 context:nil];
         [scoreManager_ addObserver:self forKeyPath:@"windows" options:0 context:nil];
+        [scoreManager_ addObserver:self forKeyPath:@"gameover" options:0 context:nil];
 
         winSize_ =[[CCDirector sharedDirector] winSize];
 
@@ -63,7 +77,7 @@
         windowsArr_ = [[NSMutableArray alloc]init];
         projectileArr_ = [[NSMutableArray alloc]init];
         
-        [self schedule:@selector(moveWindows:) interval:1.0];
+        [self schedule:@selector(moveWindows:) interval:0.5];
         [self schedule:@selector(update:)];
         
 	}
@@ -88,12 +102,12 @@
     windowsSprite_.position = ccp(winSize_.width +(windowsSprite_.contentSize.width/2), actualY);
     [self addChild:windowsSprite_];
     
-    int minDuration =2.0;
+    int minDuration =1.0;
     int maxDuration =4.0;
     int rangeDuration = maxDuration - minDuration;
     int actualDuration =(arc4random()% rangeDuration)+ minDuration;
     
-    id actionMove =[CCMoveTo actionWithDuration:actualDuration 
+    id actionMove =[CCMoveTo actionWithDuration:actualDuration
                                        position:ccp(-windowsSprite_.contentSize.width/2, actualY)];
     id actionMoveDone =[CCCallFuncN actionWithTarget:self 
                                             selector:@selector(spriteMoveFinished:)];
@@ -102,19 +116,21 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    NSLog(@"observeValueForKeyPath");
+
     if ([keyPath isEqualToString:@"score"] == YES) {
-        NSLog(@"observeValueForKeyPath score");
         [scoreLabel_ setString:[NSString stringWithFormat:@"Score：%d",scoreManager_.score]];
     }
     if ([keyPath isEqualToString:@"projectile"] == YES) {
-        NSLog(@"observeValueForKeyPath projectile");
         [projectitleLabel_ setString:[NSString stringWithFormat:@"Apple：%d",scoreManager_.projectileGoal]];
     }
     if ([keyPath isEqualToString:@"windows"] == YES) {
-        NSLog(@"observeValueForKeyPath windows");
         [windowsLabel_ setString:[NSString stringWithFormat:@"Windows：%d",scoreManager_.windowsGoal]];
     }
+    if ([keyPath isEqualToString:@"gameover"] == YES) {
+        NSLog(@"observeValueForKeyPath GameOver");
+        [self onGameOverLayer:self];
+    }
+
 }
 
 -(void)spriteMoveFinished:(id)sender
@@ -122,21 +138,15 @@
     CCSprite *sprite =(CCSprite *)sender;
     
     if(sprite.tag==1){
-        NSLog(@"spriteMoveFinished tag=1 sprite.position.x=%f",sprite.position.x);
-        NSLog(@"spriteMoveFinished tag=1 0 - sprite.contentSize.width/2=%f",0 - sprite.contentSize.width/2);
         if (sprite.position.x >= 0 - sprite.contentSize.width/2) {
             if (sprite.position.y > 0 && sprite.position.y < winSize_.height) {
-                NSLog(@"spriteMoveFinished windows");
                 [scoreManager_ addWindowsGoal];
             }
         }
         [windowsArr_ removeObject:sprite];
     }else if(sprite.tag==2){
-        NSLog(@"spriteMoveFinished tag=2 sprite.position.x=%f",sprite.position.x);
-        NSLog(@"spriteMoveFinished tag=2 winSize_.width + sprite.contentSize.width/2=%f",winSize_.width + sprite.contentSize.width/2);
         if (sprite.position.x >= winSize_.width + sprite.contentSize.width/2) {
             if (sprite.position.y > 0 && sprite.position.y < winSize_.height) {
-                NSLog(@"spriteMoveFinished projectile");
                 [scoreManager_ addProjectileGoal];
             }
         }
@@ -173,18 +183,28 @@
     
     projectile.position = ccp(appleSprite_.position.x, appleSprite_.position.y);
     
-    int offX = location.x - projectile.position.x;
-    int offY = location.y - projectile.position.y;
-    if(offX <=0)return;
+    if (location.x < appleSprite_.position.x) {
+        return;
+    }
+    
+    int realX = (winSize_.width +(projectile.contentSize.width/2))/(arc4random()%2+1);
+    int realY = winSize_.height/(arc4random()%4+1);
+    CGPoint realDest;
+    CGPoint realDest2;
+    CGPoint endPosition;
+    
+    if (location.y > winSize_.height/2) {
+        realDest = ccp(realX, realY);
+        realDest2 = ccp(realX, -(realY));
+        endPosition = ccp(realX, realY);
+    }else{
+        realDest = ccp(realX, -(realY));
+        realDest2 = ccp(realX, realY);
+        endPosition = ccp(realX, -(realY));
+    }
+    
     [self addChild:projectile];
-    
-    int realX = winSize_.width +(projectile.contentSize.width/2);
-    float ratio =(float) offY /(float) offX;
-    int realY =(realX * ratio)+ projectile.position.y;
-    
-    CGPoint realDest = ccp(abs(realX)/(arc4random()%5+1), abs(realY)/(arc4random()%5+1));
-    CGPoint realDest2 = ccp(abs(realX)/(arc4random()%5+1), abs(realY)/(arc4random()%5+1));
-    
+        
     int offRealX = realX - projectile.position.x;
     int offRealY = realY - projectile.position.y;
     float length = sqrtf((offRealX*offRealX)+(offRealY*offRealY));
@@ -194,8 +214,7 @@
     ccBezierConfig bezier1;
     bezier1.controlPoint_1 = realDest;
     bezier1.controlPoint_2 = realDest2;
-    bezier1.endPosition = ccp(realX,arc4random()%abs(realY));
-    
+    bezier1.endPosition = endPosition;
     
     id bezierBy = [CCBezierBy actionWithDuration:realMoveDuration bezier:bezier1];
     
@@ -300,6 +319,7 @@
     [scoreManager_ removeObserver:self forKeyPath:@"score"];
     [scoreManager_ removeObserver:self forKeyPath:@"projectile"];
     [scoreManager_ removeObserver:self forKeyPath:@"windows"];
+    [scoreManager_ removeObserver:self forKeyPath:@"gameover"];
     [scoreManager_ release];
     [windowsArr_ release];
     windowsArr_=nil;

@@ -22,6 +22,7 @@
 -(void)addScore;
 -(void)addProjectileGoal;
 -(void)addWindowsGoal;
+-(void)compare;
 
 
 @end

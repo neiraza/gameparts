@@ -32,18 +32,30 @@
 
 -(void)addProjectileGoal
 {
-    NSLog(@"addProjectileGoal=%d",projectileGoal_);
     [self willChangeValueForKey:@"projectile"];
     projectileGoal_+=1;
+    [self compare];
     [self didChangeValueForKey:@"projectile"];    
 }
 
 -(void)addWindowsGoal
 {
-    NSLog(@"addWindowsGoal=%d",windowsGoal_);
     [self willChangeValueForKey:@"windows"];
     windowsGoal_+=1;
+    [self compare];
     [self didChangeValueForKey:@"windows"];    
+}
+
+-(void)compare
+{
+    NSLog(@"compare");
+    NSInteger difference = projectileGoal_-windowsGoal_;
+    if (difference < -50) {
+        [self willChangeValueForKey:@"gameover"];
+        NSLog(@"compare -50 gameover");
+        [self didChangeValueForKey:@"gameover"];
+    }
+    
 }
 
 @end

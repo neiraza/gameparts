@@ -27,6 +27,7 @@
 }
 @property(readwrite,retain) CCParticleSystem *emitter;
 -(void)addWindows;
+-(void) onGameOverLayer:(id)item;
 
 +(CCScene *) scene;
 

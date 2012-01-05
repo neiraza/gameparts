@@ -64,9 +64,7 @@
 
 -(void) onGameLayer:(id)item
 {
-    CCTransitionJumpZoom *trans = [CCTransitionJumpZoom transitionWithDuration:3 
-                                                                         scene:[GameLayer scene]];
-    
+    CCTransitionJumpZoom *trans = [CCTransitionJumpZoom transitionWithDuration:3 scene:[GameLayer scene]];    
     [[CCDirector sharedDirector] replaceScene:trans];
 }
 @end
