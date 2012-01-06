@@ -148,7 +148,7 @@
 /* Begin PBXFileReference section */
 		A550CA9814B6138F003CB174 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverLayer.h; sourceTree = "<group>"; };
 		A550CA9914B6138F003CB174 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
-		A58C360114A8ADBA008D39C8 /* gameparts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gameparts.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A58C360114A8ADBA008D39C8 /* apple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = apple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58C360514A8ADBA008D39C8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A58C360714A8ADBA008D39C8 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A58C360914A8ADBA008D39C8 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -431,7 +431,7 @@
 		A58C35F614A8ADB9008D39C8 = {
 			isa = PBXGroup;
 			children = (
-				A58C361514A8ADBA008D39C8 /* gameparts */,
+				A58C361514A8ADBA008D39C8 /* apple */,
 				A58C360414A8ADBA008D39C8 /* Frameworks */,
 				A58C360214A8ADBA008D39C8 /* Products */,
 			);
@@ -440,7 +440,7 @@
 		A58C360214A8ADBA008D39C8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A58C360114A8ADBA008D39C8 /* gameparts.app */,
+				A58C360114A8ADBA008D39C8 /* apple.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -460,7 +460,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A58C361514A8ADBA008D39C8 /* gameparts */ = {
+		A58C361514A8ADBA008D39C8 /* apple */ = {
 			isa = PBXGroup;
 			children = (
 				A58C376714A8ADBC008D39C8 /* AppDelegate.h */,
@@ -484,6 +484,7 @@
 				A5F18B5414B7761200251A31 /* DispLayer.h */,
 				A5F18B5514B7761200251A31 /* DispLayer.m */,
 			);
+			name = apple;
 			path = gameparts;
 			sourceTree = "<group>";
 		};
@@ -834,9 +835,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A58C360014A8ADBA008D39C8 /* gameparts */ = {
+		A58C360014A8ADBA008D39C8 /* apple */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A58C377314A8ADBC008D39C8 /* Build configuration list for PBXNativeTarget "gameparts" */;
+			buildConfigurationList = A58C377314A8ADBC008D39C8 /* Build configuration list for PBXNativeTarget "apple" */;
 			buildPhases = (
 				A58C35FD14A8ADBA008D39C8 /* Sources */,
 				A58C35FE14A8ADBA008D39C8 /* Frameworks */,
@@ -846,9 +847,9 @@
 			);
 			dependencies = (
 			);
-			name = gameparts;
+			name = apple;
 			productName = gameparts;
-			productReference = A58C360114A8ADBA008D39C8 /* gameparts.app */;
+			productReference = A58C360114A8ADBA008D39C8 /* apple.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -859,7 +860,7 @@
 			attributes = {
 				LastUpgradeCheck = 0420;
 			};
-			buildConfigurationList = A58C35FB14A8ADB9008D39C8 /* Build configuration list for PBXProject "gameparts" */;
+			buildConfigurationList = A58C35FB14A8ADB9008D39C8 /* Build configuration list for PBXProject "apple" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -871,7 +872,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A58C360014A8ADBA008D39C8 /* gameparts */,
+				A58C360014A8ADBA008D39C8 /* apple */,
 			);
 		};
 /* End PBXProject section */
@@ -1072,7 +1073,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = gameparts/Resources/Info.plist;
 				OTHER_LDFLAGS = "-lz";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = apple;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1087,7 +1088,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = gameparts/Resources/Info.plist;
 				OTHER_LDFLAGS = "-lz";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = apple;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1096,7 +1097,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A58C35FB14A8ADB9008D39C8 /* Build configuration list for PBXProject "gameparts" */ = {
+		A58C35FB14A8ADB9008D39C8 /* Build configuration list for PBXProject "apple" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A58C377114A8ADBC008D39C8 /* Debug */,
@@ -1105,7 +1106,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A58C377314A8ADBC008D39C8 /* Build configuration list for PBXNativeTarget "gameparts" */ = {
+		A58C377314A8ADBC008D39C8 /* Build configuration list for PBXNativeTarget "apple" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A58C377414A8ADBC008D39C8 /* Debug */,
