@@ -14,11 +14,17 @@
 {
     CCSprite *appleSprite_;
     CCSprite *windowsSprite_;
+    CCSprite *droidSprite_;
+    CCSprite *sDroidSprite_;
+    CCSprite *dukeSprite_;
     float goalX_;
     float goalY_;
     CCParticleSystem *emitter_;
     NSMutableArray *windowsArr_;
     NSMutableArray *projectileArr_;
+    NSMutableArray *droidArr_;
+    NSMutableArray *sDroidArr_;
+    NSMutableArray *dukeArr_;
     CCLabelTTF *scoreLabel_;
     ScoreManager *scoreManager_;
     CCLabelTTF *projectitleLabel_;
@@ -27,7 +33,11 @@
 }
 @property(readwrite,retain) CCParticleSystem *emitter;
 -(void)addWindows;
--(void) onGameOverLayer:(id)item;
+-(void)addDroid;
+-(void)addSdroid;
+-(void)addDuke;
+-(void)onGameOverLayer:(id)item;
+-(void)onGameClearLayer:(id)item;
 
 +(CCScene *) scene;
 

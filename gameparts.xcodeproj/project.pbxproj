@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A550CA9A14B6138F003CB174 /* GameOverLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A550CA9914B6138F003CB174 /* GameOverLayer.m */; };
 		A58C360614A8ADBA008D39C8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58C360514A8ADBA008D39C8 /* QuartzCore.framework */; };
 		A58C360814A8ADBA008D39C8 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58C360714A8ADBA008D39C8 /* OpenGLES.framework */; };
 		A58C360A14A8ADBA008D39C8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A58C360914A8ADBA008D39C8 /* OpenAL.framework */; };
@@ -130,9 +131,23 @@
 		A58ED32514AA252F0068F620 /* windows-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A58ED32114AA252F0068F620 /* windows-hd.png */; };
 		A58ED32614AA252F0068F620 /* windows.png in Resources */ = {isa = PBXBuildFile; fileRef = A58ED32214AA252F0068F620 /* windows.png */; };
 		A58ED32814AA272F0068F620 /* toilet.png in Resources */ = {isa = PBXBuildFile; fileRef = A58ED32714AA272F0068F620 /* toilet.png */; };
+		A5F18AFF14B73FFA00251A31 /* e-droid-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18AFD14B73FFA00251A31 /* e-droid-hd.png */; };
+		A5F18B0014B73FFA00251A31 /* e-droid.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18AFE14B73FFA00251A31 /* e-droid.png */; };
+		A5F18B0814B741D100251A31 /* apple-projectile-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B0614B741D100251A31 /* apple-projectile-hd.png */; };
+		A5F18B0914B741D100251A31 /* apple-projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B0714B741D100251A31 /* apple-projectile.png */; };
+		A5F18B0C14B742C100251A31 /* duke.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B0A14B742C100251A31 /* duke.png */; };
+		A5F18B0D14B742C100251A31 /* duke-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B0B14B742C100251A31 /* duke-hd.png */; };
+		A5F18B1014B7434800251A31 /* s-droid.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B0E14B7434800251A31 /* s-droid.png */; };
+		A5F18B1114B7434800251A31 /* s-droid-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B0F14B7434800251A31 /* s-droid-hd.png */; };
+		A5F18B1414B7442800251A31 /* droid.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B1214B7442800251A31 /* droid.png */; };
+		A5F18B1514B7442800251A31 /* droid-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5F18B1314B7442800251A31 /* droid-hd.png */; };
+		A5F18B5314B7716400251A31 /* GameClearLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F18B5214B7716400251A31 /* GameClearLayer.m */; };
+		A5F18B5614B7761200251A31 /* DispLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5F18B5514B7761200251A31 /* DispLayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A550CA9814B6138F003CB174 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverLayer.h; sourceTree = "<group>"; };
+		A550CA9914B6138F003CB174 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
 		A58C360114A8ADBA008D39C8 /* gameparts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gameparts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58C360514A8ADBA008D39C8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A58C360714A8ADBA008D39C8 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -378,6 +393,20 @@
 		A58ED32114AA252F0068F620 /* windows-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "windows-hd.png"; path = "Resources/windows-hd.png"; sourceTree = "<group>"; };
 		A58ED32214AA252F0068F620 /* windows.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = windows.png; path = Resources/windows.png; sourceTree = "<group>"; };
 		A58ED32714AA272F0068F620 /* toilet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toilet.png; path = Resources/toilet.png; sourceTree = "<group>"; };
+		A5F18AFD14B73FFA00251A31 /* e-droid-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "e-droid-hd.png"; path = "Resources/e-droid-hd.png"; sourceTree = "<group>"; };
+		A5F18AFE14B73FFA00251A31 /* e-droid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "e-droid.png"; path = "Resources/e-droid.png"; sourceTree = "<group>"; };
+		A5F18B0614B741D100251A31 /* apple-projectile-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "apple-projectile-hd.png"; path = "Resources/apple-projectile-hd.png"; sourceTree = "<group>"; };
+		A5F18B0714B741D100251A31 /* apple-projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "apple-projectile.png"; path = "Resources/apple-projectile.png"; sourceTree = "<group>"; };
+		A5F18B0A14B742C100251A31 /* duke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = duke.png; path = Resources/duke.png; sourceTree = "<group>"; };
+		A5F18B0B14B742C100251A31 /* duke-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "duke-hd.png"; path = "Resources/duke-hd.png"; sourceTree = "<group>"; };
+		A5F18B0E14B7434800251A31 /* s-droid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "s-droid.png"; path = "Resources/s-droid.png"; sourceTree = "<group>"; };
+		A5F18B0F14B7434800251A31 /* s-droid-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "s-droid-hd.png"; path = "Resources/s-droid-hd.png"; sourceTree = "<group>"; };
+		A5F18B1214B7442800251A31 /* droid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = droid.png; path = Resources/droid.png; sourceTree = "<group>"; };
+		A5F18B1314B7442800251A31 /* droid-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "droid-hd.png"; path = "Resources/droid-hd.png"; sourceTree = "<group>"; };
+		A5F18B5114B7716400251A31 /* GameClearLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameClearLayer.h; sourceTree = "<group>"; };
+		A5F18B5214B7716400251A31 /* GameClearLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameClearLayer.m; sourceTree = "<group>"; };
+		A5F18B5414B7761200251A31 /* DispLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispLayer.h; sourceTree = "<group>"; };
+		A5F18B5514B7761200251A31 /* DispLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispLayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -448,6 +477,12 @@
 				A58C376314A8ADBC008D39C8 /* Supporting Files */,
 				A58E071514B0A88400B0C70B /* ScoreManager.h */,
 				A58E071614B0A88400B0C70B /* ScoreManager.m */,
+				A550CA9814B6138F003CB174 /* GameOverLayer.h */,
+				A550CA9914B6138F003CB174 /* GameOverLayer.m */,
+				A5F18B5114B7716400251A31 /* GameClearLayer.h */,
+				A5F18B5214B7716400251A31 /* GameClearLayer.m */,
+				A5F18B5414B7761200251A31 /* DispLayer.h */,
+				A5F18B5514B7761200251A31 /* DispLayer.m */,
 			);
 			path = gameparts;
 			sourceTree = "<group>";
@@ -455,6 +490,16 @@
 		A58C361614A8ADBA008D39C8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A5F18B1214B7442800251A31 /* droid.png */,
+				A5F18B1314B7442800251A31 /* droid-hd.png */,
+				A5F18B0A14B742C100251A31 /* duke.png */,
+				A5F18B0E14B7434800251A31 /* s-droid.png */,
+				A5F18B0F14B7434800251A31 /* s-droid-hd.png */,
+				A5F18B0B14B742C100251A31 /* duke-hd.png */,
+				A5F18B0614B741D100251A31 /* apple-projectile-hd.png */,
+				A5F18B0714B741D100251A31 /* apple-projectile.png */,
+				A5F18AFD14B73FFA00251A31 /* e-droid-hd.png */,
+				A5F18AFE14B73FFA00251A31 /* e-droid.png */,
 				A58ED31F14AA252F0068F620 /* apple-hd.png */,
 				A58ED32014AA252F0068F620 /* apple.png */,
 				A58ED32714AA272F0068F620 /* toilet.png */,
@@ -851,6 +896,16 @@
 				A58ED32514AA252F0068F620 /* windows-hd.png in Resources */,
 				A58ED32614AA252F0068F620 /* windows.png in Resources */,
 				A58ED32814AA272F0068F620 /* toilet.png in Resources */,
+				A5F18AFF14B73FFA00251A31 /* e-droid-hd.png in Resources */,
+				A5F18B0014B73FFA00251A31 /* e-droid.png in Resources */,
+				A5F18B0814B741D100251A31 /* apple-projectile-hd.png in Resources */,
+				A5F18B0914B741D100251A31 /* apple-projectile.png in Resources */,
+				A5F18B0C14B742C100251A31 /* duke.png in Resources */,
+				A5F18B0D14B742C100251A31 /* duke-hd.png in Resources */,
+				A5F18B1014B7434800251A31 /* s-droid.png in Resources */,
+				A5F18B1114B7434800251A31 /* s-droid-hd.png in Resources */,
+				A5F18B1414B7442800251A31 /* droid.png in Resources */,
+				A5F18B1514B7442800251A31 /* droid-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -961,6 +1016,9 @@
 				A58C376F14A8ADBC008D39C8 /* HelloWorldLayer.m in Sources */,
 				A58C5AC014AF52BD002EA2F9 /* GameLayer.m in Sources */,
 				A58E071714B0A88400B0C70B /* ScoreManager.m in Sources */,
+				A550CA9A14B6138F003CB174 /* GameOverLayer.m in Sources */,
+				A5F18B5314B7716400251A31 /* GameClearLayer.m in Sources */,
+				A5F18B5614B7761200251A31 /* DispLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,6 +30,20 @@
     [self didChangeValueForKey:@"score"];
 }
 
+-(void)addScore30
+{
+    [self willChangeValueForKey:@"score30"];
+    score_+=30;
+    [self didChangeValueForKey:@"score30"];
+}
+
+-(void)addScore100
+{
+    [self willChangeValueForKey:@"score100"];
+    score_+=100;
+    [self didChangeValueForKey:@"score100"];
+}
+
 -(void)addProjectileGoal
 {
     [self willChangeValueForKey:@"projectile"];
@@ -46,15 +60,38 @@
     [self didChangeValueForKey:@"windows"];    
 }
 
+-(void)deleteWindowsScore10
+{
+    [self willChangeValueForKey:@"windowsDelete"];
+    if (windowsGoal_>0) {
+        windowsGoal_-=2;
+    }else{
+        projectileGoal_+=1;
+    }
+    [self compare];
+    [self didChangeValueForKey:@"windowsDelete"];    
+    
+}
+
 -(void)compare
 {
-    NSLog(@"compare");
     NSInteger difference = projectileGoal_-windowsGoal_;
-    if (difference < -50) {
+    if (difference < -10) {
         [self willChangeValueForKey:@"gameover"];
-        NSLog(@"compare -50 gameover");
         [self didChangeValueForKey:@"gameover"];
     }
+    if (difference > 10) {
+        [self willChangeValueForKey:@"gameclear"];
+        [self didChangeValueForKey:@"gameclear"];
+    }
+//    if (difference > 10) {
+//        [self willChangeValueForKey:@"droidStart"];
+//        [self didChangeValueForKey:@"droidStart"];
+//    }
+//    if (difference < 10) {
+//        [self willChangeValueForKey:@"droidEnd"];
+//        [self didChangeValueForKey:@"droidSEnd"];
+//    }
     
 }
 

@@ -1,19 +1,16 @@
 //
-//  HelloWorldLayer.m
+//  DispLayer.m
 //  gameparts
 //
-//  Created by 徹 小栗 on 11/12/26.
-//  Copyright __MyCompanyName__ 2011年. All rights reserved.
+//  Created by 徹 小栗 on 12/01/07.
+//  Copyright 2012年 __MyCompanyName__. All rights reserved.
 //
 
-
-// Import the interfaces
-#import "HelloWorldLayer.h"
-#import "GameLayer.h"
 #import "DispLayer.h"
+#import "GameLayer.h"
 
-// HelloWorldLayer implementation
-@implementation HelloWorldLayer
+
+@implementation DispLayer
 
 +(CCScene *) scene
 {
@@ -21,7 +18,7 @@
 	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
-	HelloWorldLayer *layer = [HelloWorldLayer node];
+	DispLayer *layer = [DispLayer node];
 	
 	// add layer as a child to scene
 	[scene addChild: layer];
@@ -37,19 +34,27 @@
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
         
-        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Apple VS. Windows" 
-                                               fontName:@"Marker Felt" fontSize:64];
+        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Appleを右端に10個放り投げたら勝ち" 
+                                               fontName:@"Marker Felt" fontSize:16];
         CGSize size = [[CCDirector sharedDirector] winSize];
         [label setPosition:ccp(size.width/2, size.height*3/4)];
         [self addChild: label];
+
+        CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"Windowsが左端に10個放り投げられたら負け" 
+                                               fontName:@"Marker Felt" fontSize:16];
+        [label2 setPosition:ccp(size.width/2, size.height*3/4-label.contentSize.height)];
+        [self addChild: label2];
+
+        CCLabelTTF *label3 = [CCLabelTTF labelWithString:@"Dukeを倒すとWindowsが2個へります" 
+                                                fontName:@"Marker Felt" fontSize:16];
+        [label3 setPosition:ccp(size.width/2, size.height*3/4-label.contentSize.height-label2.contentSize.height)];
+        [self addChild: label3];
         
         // set up mene items
         CCMenuItem *item1 = [CCMenuItemFont itemFromString: @"PLAY!" 
                                                     target: self selector:@selector(onGameLayer:)];
-        CCMenuItem *item2 = [CCMenuItemFont itemFromString: @"Game Description" 
-                                                    target: self selector:@selector(onDispLayer:)];
         
-        CCMenu *menu = [CCMenu menuWithItems:item1, item2,nil];
+        CCMenu *menu = [CCMenu menuWithItems:item1, nil];
         menu.position = ccp( size.width/2, size.height*1/4);
         
         [menu alignItemsVertically];        
@@ -70,9 +75,6 @@
     CCTransitionJumpZoom *trans = [CCTransitionJumpZoom transitionWithDuration:3 scene:[GameLayer scene]];    
     [[CCDirector sharedDirector] replaceScene:trans];
 }
--(void) onDispLayer:(id)item
-{
-    CCTransitionJumpZoom *trans = [CCTransitionJumpZoom transitionWithDuration:3 scene:[DispLayer scene]];    
-    [[CCDirector sharedDirector] replaceScene:trans];
-}
+
+
 @end

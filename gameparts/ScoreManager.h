@@ -20,8 +20,11 @@
 @property(nonatomic,assign) NSInteger windowsGoal;
 
 -(void)addScore;
+-(void)addScore30;
+-(void)addScore100;
 -(void)addProjectileGoal;
 -(void)addWindowsGoal;
+-(void)deleteWindowsScore10;
 -(void)compare;
 
 
